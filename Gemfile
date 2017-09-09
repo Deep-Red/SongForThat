@@ -8,6 +8,7 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
+# Use Webpack as asset pipeline
 gem 'webpacker'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
@@ -24,6 +25,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+# Use Devise for authentication
+gem 'devise'
+# Use Foreman to run webpack and rails servers simultaneously
 gem 'foreman'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
