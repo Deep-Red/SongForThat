@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :tags
+  resources :songs
   devise_for :users
   root to: "dashboard#index"
 

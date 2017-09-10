@@ -10,10 +10,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170909235727) do
+ActiveRecord::Schema.define(version: 20170910041211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "songs", force: :cascade do |t|
+    t.string "title"
+    t.string "artist"
+    t.bigint "added_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["added_by_id"], name: "index_songs_on_added_by_id"
+  end
+
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "song_id"
+    t.bigint "tag_id"
+    t.bigint "created_by_id"
+    t.integer "approvals"
+    t.integer "disapprovals"
+    t.decimal "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_by_id"], name: "index_taggings_on_created_by_id"
+    t.index ["song_id"], name: "index_taggings_on_song_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.bigint "added_by_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["added_by_id"], name: "index_tags_on_added_by_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -34,4 +65,7 @@ ActiveRecord::Schema.define(version: 20170909235727) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "taggings", "songs"
+  add_foreign_key "taggings", "tags"
+  add_foreign_key "taggings", "users", column: "created_by_id"
 end

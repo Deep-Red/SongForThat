@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  song: one
+  tag: one
+  user: one
+  approvals: 1
+  disapprovals: 1
+  score: 
+
+two:
+  song: two
+  tag: two
+  user: two
+  approvals: 1
+  disapprovals: 1
+  score: 

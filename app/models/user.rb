@@ -10,6 +10,10 @@ class User < ApplicationRecord
   # Only allow letters, numbers, underscores, and punctuation (periods?) in username
   validates_format_of :username, with: /^[a-zA-Z0-9_\.]*$/, :multiline => true
 
+  has_many :taggings, foreign_key: "created_by_id"
+  has_many :tags, foreign_key: "added_by_id"
+  has_many :songs, foreign_key: "added_by_id"
+
   def login=(login)
     @login = login
   end
@@ -27,5 +31,5 @@ class User < ApplicationRecord
       where(conditions.to_h).first
     end
   end
-  
+
 end
