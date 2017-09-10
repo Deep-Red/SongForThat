@@ -10,18 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170910041211) do
+ActiveRecord::Schema.define(version: 20170910172737) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "citext"
 
   create_table "songs", force: :cascade do |t|
-    t.string "title"
-    t.string "artist"
+    t.citext "title"
+    t.citext "artist"
     t.bigint "added_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["added_by_id"], name: "index_songs_on_added_by_id"
+    t.index ["artist"], name: "index_songs_on_artist"
+    t.index ["title", "artist"], name: "index_songs_on_title_and_artist", unique: true
+    t.index ["title"], name: "index_songs_on_title"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -34,6 +38,7 @@ ActiveRecord::Schema.define(version: 20170910041211) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_by_id"], name: "index_taggings_on_created_by_id"
+    t.index ["song_id", "tag_id"], name: "index_taggings_on_song_id_and_tag_id", unique: true
     t.index ["song_id"], name: "index_taggings_on_song_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
