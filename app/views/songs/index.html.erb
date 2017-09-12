@@ -1,28 +1,40 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Songs</h1>
+<section class="search-form">
+  <%= form_for :songs, method: :get do |f| %>
+    <div class="input-group input-group-lg">
+      <%= label_tag :keywords, nil, class: "sr-only" %>
+      <%= text_field_tag :keywords, nil, placeholder: "Title or Artist", class: "form-control input-lg" %>
+      <span class="input-group-btn">
+        <%= submit_tag "Find Songs", class: "btn btn-primary btn-lg" %>
+      </span>
+    </div>
+  <% end %>
+</section>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Artist</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<section class="search-results">
+  <header>
+    <h1 class="h3">Results</h1>
+  </header>
 
-  <tbody>
+  <% if @songs.present? %>
+    <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
+  <% end %>
+
+  <ol class="list-group">
     <% @songs.each do |song| %>
-      <tr>
-        <td><%= song.title %></td>
-        <td><%= song.artist %></td>
-        <td><%= link_to 'Show', song %></td>
-        <td><%= link_to 'Edit', edit_song_path(song) %></td>
-        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <li class="list-group-item">
+        <h2><%= song.title %></h2>
+        <h3><%= song.artist %></h3>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  </ol>
+
+  <% if @songs.present? %>
+    <%= render partial: "pager", locals: { keywords: @keywords, page: @page } %>
+  <% end %>
+</section>
 
 <br>
 

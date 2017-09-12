@@ -1,10 +1,22 @@
 class SongsController < ApplicationController
   before_action :set_song, only: [:show, :edit, :update, :destroy]
 
+  PAGE_SIZE = 10
   # GET /songs
   # GET /songs.json
   def index
-    @songs = Song.all
+    @page = (params[:page] || 0).to_i
+    if params[:keywords].present?
+      @keywords = params[:keywords]
+      song_search_term = SongSearchTerm.new(@keywords)
+      @songs = Song.where(
+      song_search_term.where_clause,
+      song_search_term.where_args).
+      order(song_search_term.order).
+      offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+    else
+      @songs = []
+    end
   end
 
   # GET /songs/1
