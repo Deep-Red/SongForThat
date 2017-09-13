@@ -4,16 +4,16 @@ import { BrowserModule          } from "@angular/platform-browser";
 import { FormsModule            } from "@angular/forms";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { Http,HttpModule        } from "@angular/http";
-import { SongSearchComponent    } from "SongSearchComponent";
+import { NewSearchComponent     } from "NewSearchComponent";
 
 
-var SongAppModule = NgModule({
+var NewAppModule = NgModule({
   imports:      [ BrowserModule, FormsModule, HttpModule ],
-  declarations: [ SongSearchComponent ],
-  bootstrap:    [ SongSearchComponent ]
+  declarations: [ NewSearchComponent ],
+  bootstrap:    [ NewSearchComponent ]
 })
 .Class({
   constructor: function() {}
 });
 
-platformBrowserDynamic().bootstrapModule(SongAppModule);
+platformBrowserDynamic().bootstrapModule(NewAppModule);

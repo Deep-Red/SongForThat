@@ -1,10 +1,9 @@
 <header>
   <h1>Welcome to Song For That, <%= current_user.username %>!</h1>
-  <h2>We're using Rails <%= Rails.version %></h2>
 </header>
 <section>
-  <p>
-    Future home of the "Song For That" dashboard
-  </p>
+  <asft-new-search>Just a moment...</asft-new-search>
+  <%= javascript_pack_tag "new_search" %>
+  <br />
   <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
 </section>

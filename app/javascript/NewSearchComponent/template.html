@@ -1,15 +1,15 @@
 <header>
-<h1 class="h2">Song Search</h1>
+<h1 class="h2">New Search</h1>
 </header>
 <section class="search-form">
   <form>
     <div class="input-group input-group-lg">
       <label for="keywords" class="sr-only">Keywords</label>
       <input type="text" id="keywords" name="keywords"
-        placeholder="Title or Artist" class="form-control input-lg" bindon-ngModel="keywords"
+        placeholder="Title, Artist, or Tag" class="form-control input-lg" bindon-ngModel="keywords"
         on-ngModelChange="search($event)">
       <span class="input-group-btn">
-        <input type="submit" value="Find Songs" class="btn btn-primary btn-lg" on-click="search()">
+        <input type="submit" value="Find" class="btn btn-primary btn-lg" on-click="search()">
       </span>
     </div>
   </form>
@@ -18,6 +18,9 @@
   <header>
     <h1 class="h3">Results</h1>
   </header>
+  <h2 class="h4">Tag Results</h2>
+  <button *ngFor="let tag of tags" class="btn btn-info btn-sm"> {{ tag.name }} </button>
+  <h2 class="h4">Song Results</h2>
   <ol class="list-group">
       <li *ngFor="let song of songs" class="list-group-item">
         <h2> {{ song.title }} </h2>
