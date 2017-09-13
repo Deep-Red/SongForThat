@@ -17,6 +17,12 @@ class SongsController < ApplicationController
     else
       @songs = []
     end
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json: { songs: @songs }
+      }
+    end
   end
 
   # GET /songs/1
