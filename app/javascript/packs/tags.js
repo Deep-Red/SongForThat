@@ -5,21 +5,21 @@ import { FormsModule            } from "@angular/forms";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
 import { Http,HttpModule        } from "@angular/http";
 
-var SongSearchComponent = Component({
-  selector: "asft-song-search",
+var TagSearchComponent = Component({
+  selector: "asft-tag-search",
   template: '\
   <header>\
-  <h1 class="h2">Song Search</h1>\
+  <h1 class="h2">Tag Search</h1>\
   </header>\
   <section class="search-form">\
     <form>\
       <div class="input-group input-group-lg">\
         <label for="keywords" class="sr-only">Keywords</label>\
         <input type="text" id="keywords" name="keywords" \
-          placeholder="Title or Artist" class="form-control input-lg" bindon-ngModel="keywords"\
+          placeholder="Tag name" class="form-control input-lg" bindon-ngModel="keywords"\
           on-ngModelChange="search($event)">\
         <span class="input-group-btn">\
-          <input type="submit" value="Find Songs" class="btn btn-primary btn-lg" on-click="search()">\
+          <input type="submit" value="Find Tags" class="btn btn-primary btn-lg" on-click="search()">\
         </span>\
       </div>\
     </form>\
@@ -29,9 +29,8 @@ var SongSearchComponent = Component({
       <h1 class="h3">Results</h1>\
     </header>\
     <ol class="list-group">\
-        <li *ngFor="let song of songs" class="list-group-item">\
-          <h2> {{ song.title }} </h2>\
-          <h3> {{ song.artist }} </h3>\
+        <li *ngFor="let tag of tags" class="list-group-item">\
+          <h2> {{ tag.name}} </h2>\
         </li>\
     </ol>\
   </section>\
@@ -40,7 +39,7 @@ var SongSearchComponent = Component({
   constructor: [
     Http,
     function(http) {
-      this.songs = null;
+      this.tags = null;
       this.http = http;
       this.keywords = "";
     }
@@ -52,22 +51,22 @@ var SongSearchComponent = Component({
       return;
     }
     self.http.get(
-      "/songs.json?keywords=" + self.keywords
+      "/tags.json?keywords=" + self.keywords
     ).subscribe(
       function(response) {
-        self.songs = response.json().songs;
+        self.tags = response.json().tags;
       }
     );
   }
 });
 
-var SongAppModule = NgModule({
+var TagAppModule = NgModule({
   imports:      [ BrowserModule, FormsModule, HttpModule ],
-  declarations: [ SongSearchComponent ],
-  bootstrap:    [ SongSearchComponent ]
+  declarations: [ TagSearchComponent ],
+  bootstrap:    [ TagSearchComponent ]
 })
 .Class({
   constructor: function() {}
 });
 
-platformBrowserDynamic().bootstrapModule(SongAppModule);
+platformBrowserDynamic().bootstrapModule(TagAppModule);

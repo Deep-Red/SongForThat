@@ -1,10 +1,28 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
+  PAGE_SIZE = 100
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.all
+    @page = (params[:page] || 0).to_i
+    if params[:keywords].present?
+      @keywords = params[:keywords]
+      tag_search_term = TagSearchTerm.new(@keywords)
+      @tags = Tag.where(
+      tag_search_term.where_clause,
+      tag_search_term.where_args).
+      order(tag_search_term.order).
+      offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+    else
+      @tags = []
+    end
+    respond_to do |format|
+      format.html {}
+      format.json {
+        render json: { tags: @tags }
+      }
+    end
   end
 
   # GET /tags/1
