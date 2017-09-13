@@ -16,7 +16,8 @@ var SongSearchComponent = Component({
       <div class="input-group input-group-lg">\
         <label for="keywords" class="sr-only">Keywords</label>\
         <input type="text" id="keywords" name="keywords" \
-          placeholder="Title or Artist" class="form-control input-lg" bindon-ngModel="keywords">\
+          placeholder="Title or Artist" class="form-control input-lg" bindon-ngModel="keywords"\
+          on-ngModelChange="search($event)">\
         <span class="input-group-btn">\
           <input type="submit" value="Find Songs" class="btn btn-primary btn-lg" on-click="search()">\
         </span>\
@@ -44,8 +45,12 @@ var SongSearchComponent = Component({
       this.keywords = "";
     }
   ],
-  search: function() {
+  search: function($event) {
     var self = this;
+    self.keywords = $event;
+    if (self.keywords.length < 3) {
+      return;
+    }
     self.http.get(
       "/songs.json?keywords=" + self.keywords
     ).subscribe(
