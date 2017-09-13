@@ -1,0 +1,26 @@
+<header>
+<h1 class="h2">Tag Search</h1>
+</header>
+<section class="search-form">
+  <form>
+    <div class="input-group input-group-lg">
+      <label for="keywords" class="sr-only">Keywords</label>
+      <input type="text" id="keywords" name="keywords" 
+        placeholder="Tag name" class="form-control input-lg" bindon-ngModel="keywords"
+        on-ngModelChange="search($event)">
+      <span class="input-group-btn">
+        <input type="submit" value="Find Tags" class="btn btn-primary btn-lg" on-click="search()">
+      </span>
+    </div>
+  </form>
+</section>
+<section class="search-results">
+  <header>
+    <h1 class="h3">Results</h1>
+  </header>
+  <ol class="list-group">
+      <li *ngFor="let tag of tags" class="list-group-item">
+        <h2> {{ tag.name}} </h2>
+      </li>
+  </ol>
+</section>
