@@ -2,6 +2,12 @@ class SongsController < ApplicationController
   before_action :set_song, only: [:show, :edit, :update, :destroy]
 
   PAGE_SIZE = 10
+
+  def ng
+    @base_url = "/songs/ng"
+    render :index
+  end
+
   # GET /songs
   # GET /songs.json
   def index
@@ -18,7 +24,9 @@ class SongsController < ApplicationController
       @songs = []
     end
     respond_to do |format|
-      format.html {}
+      format.html {
+        redirect_to songs_ng_path
+      }
       format.json {
         render json: { songs: @songs }
       }
@@ -28,6 +36,15 @@ class SongsController < ApplicationController
   # GET /songs/1
   # GET /songs/1.json
   def show
+    song = Song.find(params[:id])
+    taggings = Tagging.where(song_id: song.id)
+    tags = []
+    taggings.each do |tagging|
+      tags << Tag.find(tagging.tag_id)
+    end
+    respond_to do |format|
+      format.json { render json: { song: song, tags: tags } }
+    end
   end
 
   # GET /songs/new

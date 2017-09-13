@@ -15,15 +15,19 @@
   </form>
 </section>
 <section class="search-results">
-  <header>
-    <h1 class="h3">Results</h1>
-  </header>
   <h2 class="h4">Tag Results</h2>
-  <button *ngFor="let tag of tags" class="btn btn-info btn-sm"> {{ tag.name }} </button>
+  <div class="btn-toolbar">
+    <button *ngFor="let tag of tags" class="btn btn-info btn-sm"> {{ tag.name }} </button>
+  </div>
   <h2 class="h4">Song Results</h2>
   <ol class="list-group">
-      <li *ngFor="let song of songs" class="list-group-item">
+      <li *ngFor="let song of songs" class="list-group-item clearfix">
         <h2> {{ song.title }} </h2>
+        <div class="pull-right">
+          <button class="btn btn-small btn-primary" on-click="viewDetails(song)">
+            View Details...
+          </button>
+        </div>
         <h3> {{ song.artist }} </h3>
       </li>
   </ol>

@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { Http      } from "@angular/http";
+import { Router    } from "@angular/router";
 import   template    from "./template.html";
 
 var NewSearchComponent = Component({
@@ -9,13 +10,18 @@ var NewSearchComponent = Component({
 }).Class({
   constructor: [
     Http,
-    function(http) {
+    Router,
+    function(http, router) {
       this.songs = null;
       this.tags = null;
       this.http      = http;
       this.keywords  = "";
+      this.router = router;
     }
   ],
+  viewDetails: function(element) {
+    this.router.navigate(["/", element.id]);
+  },
   search: function($event) {
     var self = this;
     self.keywords = $event;

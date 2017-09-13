@@ -9,6 +9,7 @@
     "@angular/http": "^4.4.0-RC.0",
     "@angular/platform-browser": "^4.4.0-RC.0",
     "@angular/platform-browser-dynamic": "^4.4.0-RC.0",
+    "@angular/router": "^4.3.6",
     "autoprefixer": "^7.1.4",
     "babel-core": "^6.26.0",
     "babel-loader": "7.x",

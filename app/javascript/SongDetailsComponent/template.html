@@ -1,0 +1,12 @@
+<section class="song-details" *ngIf="song">
+  <div class="container">
+    <h2>{{ song.title }}</h2>
+    <h3>{{ song.artist }}</h3>
+  </div>
+</section>
+
+<section class="tag-list" *ngIf="tags">
+  <div class="btn-toolbar">
+    <button *ngFor="let tag of tags" class="btn btn-info btn-sm"> {{ tag.name }} </button>
+  </div>
+</section>
