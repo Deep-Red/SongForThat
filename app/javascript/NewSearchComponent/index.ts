@@ -20,7 +20,12 @@ var NewSearchComponent = Component({
     }
   ],
   viewDetails: function(element) {
-    this.router.navigate(["/", element.id]);
+    if (element.name)
+      var cont = "tags";
+    else if (element.title)
+      var cont = "songs";
+
+    this.router.navigate(["/", cont, element.id]);
   },
   search: function($event) {
     var self = this;

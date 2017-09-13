@@ -8,6 +8,7 @@ import { RouterModule           } from "@angular/router";
 
 import { NewSearchComponent     } from "NewSearchComponent";
 import { SongDetailsComponent   } from "SongDetailsComponent";
+import { TagDetailsComponent    } from "TagDetailsComponent";
 
 var AppComponent = Component({
   selector: "asft-search-app",
@@ -25,15 +26,19 @@ var routing = RouterModule.forRoot(
       component: NewSearchComponent
     },
     {
-      path: ":id",
+      path: "songs/:id",
       component: SongDetailsComponent
+    },
+    {
+      path: "tags/:id",
+      component: TagDetailsComponent
     }
   ]
 );
 
 var NewAppModule = NgModule({
   imports:      [ BrowserModule, FormsModule, HttpModule, routing ],
-  declarations: [ NewSearchComponent, SongDetailsComponent, AppComponent ],
+  declarations: [ NewSearchComponent, SongDetailsComponent, TagDetailsComponent, AppComponent ],
   bootstrap:    [ AppComponent ]
 })
 .Class({

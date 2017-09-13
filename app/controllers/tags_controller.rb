@@ -28,6 +28,15 @@ class TagsController < ApplicationController
   # GET /tags/1
   # GET /tags/1.json
   def show
+    tag = Tag.find(params[:id])
+    taggings = Tagging.where(tag_id: tag.id)
+    songs = []
+    taggings.each do |tagging|
+      songs << Song.find(tagging.song_id)
+    end
+    respond_to do |format|
+      format.json { render json: { tag: tag, songs: songs } }
+    end
   end
 
   # GET /tags/new

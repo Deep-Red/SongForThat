@@ -17,7 +17,7 @@
 <section class="search-results">
   <h2 class="h4">Tag Results</h2>
   <div class="btn-toolbar">
-    <button *ngFor="let tag of tags" class="btn btn-info btn-sm"> {{ tag.name }} </button>
+    <button *ngFor="let tag of tags" class="btn btn-info btn-sm" on-click="viewDetails(tag)"> {{ tag.name }} </button>
   </div>
   <h2 class="h4">Song Results</h2>
   <ol class="list-group">
