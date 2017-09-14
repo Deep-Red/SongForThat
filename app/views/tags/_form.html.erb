@@ -11,17 +11,11 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :name %>
-    <%= form.text_field :name, id: :tag_name %>
+    <%= form.text_field :name, id: :tag_name, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :references %>
-    <%= form.text_field :references, id: :tag_references %>
-  </div>
+  <%= form.submit "Create Tag", class: "btn btn-primary btn-md" %>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

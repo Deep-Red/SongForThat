@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914153704) do
+ActiveRecord::Schema.define(version: 20170914163459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,9 +32,9 @@ ActiveRecord::Schema.define(version: 20170914153704) do
     t.bigint "song_id"
     t.bigint "tag_id"
     t.bigint "created_by_id"
-    t.integer "approvals"
-    t.integer "disapprovals"
-    t.decimal "score"
+    t.integer "approvals", default: 0
+    t.integer "disapprovals", default: 0
+    t.decimal "score", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["created_by_id"], name: "index_taggings_on_created_by_id"

@@ -8,14 +8,14 @@
 
 require 'csv'
 
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'musicthemetime-first-pass.csv'))
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'song-seeds.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-u = User.find_by(username: "mtt" )
+u = User.find_by(username: "Zero")
 csv.each do |row|
 
   a = Song.find_by(title: row['title'], artist: row['artist'])
-  b = Tag.find_by(name: row['theme'])
+  b = Tag.find_by(name: row['tag'])
 
   unless a
     s = u.songs.build
@@ -27,9 +27,9 @@ csv.each do |row|
 
   unless b
     t = u.tags.build
-    t.name = row['theme']
+    t.name = row['tag']
     t.save
-    b = Tag.find_by(name: row['theme'])
+    b = Tag.find_by(name: row['tag'])
   end
 
 

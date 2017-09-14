@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "tags/ng",                    to: "tags#ng"
   get "tags/ng/*angular_route",     to: "tags#ng"
 
-  resources :songs, only: [ :index, :show ]
-  resources :tags, only: [ :index, :show ]
+  resources :songs, only: [ :index, :show, :new, :create ]
+  resources :tags, only: [ :index, :show, :new, :create ]
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
