@@ -7,6 +7,6 @@
 
 <section class="tag-list" *ngIf="tags">
   <div class="btn-toolbar">
-    <button *ngFor="let tag of tags" class="btn btn-info btn-sm"> {{ tag.name }} </button>
+    <button *ngFor="let tag of tags" class="btn btn-info btn-sm" on-click="viewDetails(tag)"> {{ tag.name }} </button>
   </div>
 </section>

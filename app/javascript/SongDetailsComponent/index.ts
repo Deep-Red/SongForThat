@@ -1,5 +1,6 @@
 import { Component      } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { Router         } from "@angular/router";
 import { Http           } from "@angular/http";
 import   template         from "./template.html";
 
@@ -10,13 +11,23 @@ var SongDetailsComponent = Component({
   constructor: [
     ActivatedRoute,
     Http,
-    function(activatedRoute,http) {
+    Router,
+    function(activatedRoute, http, router) {
       this.activatedRoute = activatedRoute;
       this.http           = http;
       this.id             = null;
       this.song           = null;
+      this.router         = router;
     }
   ],
+  viewDetails: function(element) {
+    if (element.name)
+      var cont = "tags";
+    else if (element.title)
+      var cont = "songs";
+
+    this.router.navigate(["/", cont, element.id]);
+  },
   ngOnInit: function() {
     var self = this;
     var observableFailed = function(response) {

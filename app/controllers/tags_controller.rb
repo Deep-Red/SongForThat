@@ -2,6 +2,12 @@ class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
   PAGE_SIZE = 100
+
+  def ng
+    @base_url = "/tags/ng"
+    render :index
+  end
+
   # GET /tags
   # GET /tags.json
   def index
