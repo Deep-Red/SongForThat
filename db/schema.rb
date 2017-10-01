@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170914163459) do
+ActiveRecord::Schema.define(version: 20170929052657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,10 +22,12 @@ ActiveRecord::Schema.define(version: 20170914163459) do
     t.bigint "added_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "year"
     t.index ["added_by_id"], name: "index_songs_on_added_by_id"
     t.index ["artist"], name: "index_songs_on_artist"
     t.index ["title", "artist"], name: "index_songs_on_title_and_artist", unique: true
     t.index ["title"], name: "index_songs_on_title"
+    t.index ["year"], name: "index_songs_on_year"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -37,19 +39,12 @@ ActiveRecord::Schema.define(version: 20170914163459) do
     t.decimal "score", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "category"
+    t.index ["category"], name: "index_taggings_on_category"
     t.index ["created_by_id"], name: "index_taggings_on_created_by_id"
-    t.index ["song_id", "tag_id"], name: "index_taggings_on_song_id_and_tag_id", unique: true
+    t.index ["song_id", "tag_id", "category"], name: "index_taggings_on_song_id_and_tag_id_and_category", unique: true
     t.index ["song_id"], name: "index_taggings_on_song_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
-  end
-
-  create_table "taggings_types", force: :cascade do |t|
-    t.bigint "tagging_id"
-    t.bigint "type_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["tagging_id"], name: "index_taggings_types_on_tagging_id"
-    t.index ["type_id"], name: "index_taggings_types_on_type_id"
   end
 
   create_table "tags", force: :cascade do |t|
@@ -59,12 +54,6 @@ ActiveRecord::Schema.define(version: 20170914163459) do
     t.datetime "updated_at", null: false
     t.index ["added_by_id"], name: "index_tags_on_added_by_id"
     t.index ["name"], name: "index_tags_on_name", unique: true
-  end
-
-  create_table "types", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -89,6 +78,4 @@ ActiveRecord::Schema.define(version: 20170914163459) do
   add_foreign_key "taggings", "songs"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users", column: "created_by_id"
-  add_foreign_key "taggings_types", "taggings"
-  add_foreign_key "taggings_types", "types"
 end
