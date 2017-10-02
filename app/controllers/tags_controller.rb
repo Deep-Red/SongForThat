@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
 #  before_action :set_tag, only: [:show, :edit, :update, :destroy]
 
-  PAGE_SIZE = 100
+  PAGE_SIZE = 15
 
   def ng
     @base_url = "/tags/ng"
@@ -34,13 +34,15 @@ class TagsController < ApplicationController
   # GET /tags/1
   # GET /tags/1.json
   def show
+    @page = (params[:page] || 0).to_i
     tag = Tag.find(params[:id])
-    taggings = Tagging.where(tag_id: tag.id)
+    taggings = Tagging.where(tag_id: tag.id).offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
     songs = []
     taggings.each do |tagging|
       songs << Song.find(tagging.song_id)
     end
     respond_to do |format|
+      format.html { redirect_to "/"}
       format.json { render json: { tag: tag, songs: songs } }
     end
   end
@@ -104,6 +106,6 @@ class TagsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
-      params.require(:tag).permit(:name, :references)
+      params.require(:tag).permit(:name, :references, :page)
     end
 end
