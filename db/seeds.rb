@@ -20,13 +20,6 @@ def create_tagging(name, category)
     tag.save
     tagging.save
 
-#    unless Tagging.find_by(tag: tagging.tag.id, song: tagging.song.id, category: category)
-#      tagging = tag.taggings.build
-#      tagging.song = @song
-#      tagging.category = category
-#      tagging.created_by = @user
-#      tagging.save
-#    end
 end
 
 @line_count = 0
@@ -37,8 +30,7 @@ end
 File.open(Rails.root.join('lib', 'seeds', 'out.txt')).each do |line|
   linetype = @line_count % 5
   @line_count += 1
-#  puts "Line count: #{@line_count}, line type: #{linetype}"
-  if @line_count > 2797220 #2452705 1320910
+  if @line_count > 0 #2797220 #2452705 1320910
     line_info = line.chomp.split("|")
 
     case linetype
@@ -48,9 +40,7 @@ File.open(Rails.root.join('lib', 'seeds', 'out.txt')).each do |line|
     when 1
       @song.artist = line_info.join(", ")
       duplicate = Song.find_by(title: "#{@song.title}", artist: "#{@song.artist}")
-  #    puts "DUP #{@song.title}" if duplicate
       @song = duplicate if duplicate
-  #    puts "@song id: #{@song.id}"
     when 2
       line_info.each do |genre|
         create_tagging(genre, "genre")
@@ -79,40 +69,40 @@ puts "out.txt processed!"
 
 
 
-#csv_text = File.read(Rails.root.join('lib', 'seeds', 'song-seeds.csv'))
-#csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-#
-#csv.each do |row|
-#
-#  @line_count += 1
-#
-#  a = Song.find_by(title: row['title'], artist: row['artist'])
-#  b = Tag.find_by(name: row['tag'])
-#
-#  unless a
-#    s = u.songs.build
-#    s.artist = row['artist']
-#    s.title = row['title']
-#    s.save
-#    a = Song.find_by(title: row['title'], artist: row['artist'])
-#  end
-#
-#  unless b
-#    t = u.tags.build
-#    t.name = row['tag']
-#    t.save
-#    b = Tag.find_by(name: row['tag'])
-#  end
-#
-#  unless Tagging.find_by(song: a, tag: b, category: "content")
-#    conn = u.taggings.build
-#    conn.song = a
-#    conn.tag = b
-#    conn.category = "content"
-#    conn.save
-#  end
-#
-#  puts "Processed line ##{@line_count}."
-#end
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'song-seeds.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+
+  @line_count += 1
+
+  a = Song.find_by(title: row['title'], artist: row['artist'])
+  b = Tag.find_by(name: row['tag'])
+
+  unless a
+    s = u.songs.build
+    s.artist = row['artist']
+    s.title = row['title']
+    s.save
+    a = Song.find_by(title: row['title'], artist: row['artist'])
+  end
+
+  unless b
+    t = u.tags.build
+    t.name = row['tag']
+    t.save
+    b = Tag.find_by(name: row['tag'])
+  end
+
+  unless Tagging.find_by(song: a, tag: b, category: "content")
+    conn = u.taggings.build
+    conn.song = a
+    conn.tag = b
+    conn.category = "content"
+    conn.save
+  end
+
+  puts "Processed line ##{@line_count}."
+end
 
 puts "Database seeded."
