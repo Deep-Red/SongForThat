@@ -25,6 +25,8 @@ end
 @line_count = 0
 @user = User.find_by(username: "RobotZero")
 @user ||= User.create(username: "RobotZero", password: "aaaaaaa", email: "fake@example.com")
+@user2 = User.find_by(username: "RobotOne")
+@user2 ||= User.create(username: "RobotOne", password: "bbbbbbb", email: "fake@example.com")
 @song = nil
 
 File.open(Rails.root.join('lib', 'seeds', 'out.txt')).each do |line|
@@ -80,7 +82,7 @@ csv.each do |row|
   b = Tag.find_by(name: row['tag'])
 
   unless a
-    s = u.songs.build
+    s = @user2.songs.build
     s.artist = row['artist']
     s.title = row['title']
     s.save
@@ -88,14 +90,14 @@ csv.each do |row|
   end
 
   unless b
-    t = u.tags.build
+    t = @user2.tags.build
     t.name = row['tag']
     t.save
     b = Tag.find_by(name: row['tag'])
   end
 
   unless Tagging.find_by(song: a, tag: b, category: "content")
-    conn = u.taggings.build
+    conn = @user2.taggings.build
     conn.song = a
     conn.tag = b
     conn.category = "content"

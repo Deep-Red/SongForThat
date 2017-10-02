@@ -21,4 +21,4 @@
 /node_modules
 
 # Ignore all seeds
-/lib/seeds/*
+# /lib/seeds/*
