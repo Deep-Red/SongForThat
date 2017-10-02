@@ -32,7 +32,7 @@ end
 File.open(Rails.root.join('lib', 'seeds', 'out.txt')).each do |line|
   linetype = @line_count % 5
   @line_count += 1
-  if @line_count > 0 #2797220 #2452705 1320910
+  if @line_count > 103800 #2797220 #2452705 1320910
     line_info = line.chomp.split("|")
 
     case linetype
