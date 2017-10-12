@@ -44,6 +44,7 @@ class SongsController < ApplicationController
       tags << Tag.find(tagging.tag_id)
     end
     respond_to do |format|
+      format.html { redirect_to "/"}
       format.json { render json: { song: song, tags: tags } }
     end
   end

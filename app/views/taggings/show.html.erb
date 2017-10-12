@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Song:</strong>
+  <%= @tagging.song.title %>
+  <%= @tagging.song.artist %>
+</p>
+
+<p>
+  <strong>Tagged as:</strong>
+  <%= @tagging.tag.name %>
+  <strong>In category:</strong>
+  <%= @tagging.tag.category %>
+</p>
+
+<%= link_to 'Back', taggings_path %>
