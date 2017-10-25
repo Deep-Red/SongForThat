@@ -10,3 +10,32 @@
     <button *ngFor="let tag of tags" class="btn btn-info btn-sm" on-click="viewDetails(tag)"> {{ tag.name }} </button>
   </div>
 </section>
+
+<br />
+
+<section>
+  <button (click)="showHide = !showHide" class="btn btn-primary btn-md">Add a new Tag</button>
+</section>
+
+<section class="tag-song-form" *ngIf="showHide">
+  <form>
+    <div class="input-group input-group-lg">
+      <label for="new-tag" class="sr-only">Tag</label>
+      <input type="text" id="new-tag" name="new-tag"
+        placeholder="type here" class="form-control input-lg" bindon-ngModel="keywords"
+        on-ngModelChange="search($event)">
+      <span class="input-group-btn">
+        <input type="submit" value="Find" class="btn btn-primary btn-lg" on-click="search($event)">
+      </span>
+    </div>
+  </form>
+</section>
+<section class="tag-song-results">
+  <h2 class="h4">Tag Results</h2>
+  <ol class="list-group">
+    <li *ngFor="let tag of newtags" class="list-group-item clearfix">
+      <h2> {{ tag.name }} </h2>
+      <input type="submit" value="Add" class="btn btn-primary btn-lg" on-click="addTag(tag, song)">
+    </li>
+  </ol>
+</section>

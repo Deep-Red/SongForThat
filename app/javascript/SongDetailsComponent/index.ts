@@ -28,6 +28,36 @@ var SongDetailsComponent = Component({
 
     this.router.navigate(["/", cont, element.id]);
   },
+  search: function($event) {
+    var self = this;
+    self.keywords = $event;
+    if (self.keywords.length < 3) {
+      return;
+    }
+    self.http.get(
+      "/tags.json?keywords=" + self.keywords
+    ).subscribe(
+      function(response) {
+        self.newtags = response.json().tags;
+      }
+    );
+  },
+  addTag: function(tag, song) {
+    var self = this;
+    self.tag = tag.id;
+    self.song = song.id;
+    self.category = "content";
+    self.http.post(
+      "/taggings.json?",
+      {tagging: {tag: self.tag,
+      song: self.song,
+      category: self.category}}
+    ).subscribe(
+      function(response) {
+        self.http.get("/songs/" + song.id + ".json");
+      }
+    );
+  },
   ngOnInit: function() {
     var self = this;
     var observableFailed = function(response) {
