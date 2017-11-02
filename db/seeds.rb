@@ -9,6 +9,7 @@
 
 
 require 'csv'
+require 'open-uri'
 
 def create_tag(name, user)
   tag = Tag.find_or_create_by(name: "#{name}")
@@ -35,11 +36,12 @@ end
 @failed_taggings_file = File.open(Rails.root.join('log', 'failed_taggings_file.txt'), "w")
 
 
-File.open(Rails.root.join('lib', 'seeds', 'song_release_data.txt')).each do |line|
+CSV.foreach(open("https://s3.amazonaws.com/asft/song_release_data.txt"), { :col_sep => "|", :quote_char => "\x00" }) do |line|
   linetype = @line_count % 5
   @line_count += 1
   if @line_count > 0 #103800 #2797220 #2452705 1320910
-    line_info = line.chomp.split("|")
+#    puts line.inspect
+    line_info = line#.chomp.split("|")
 
     case linetype
     when 0
