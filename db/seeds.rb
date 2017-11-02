@@ -45,6 +45,7 @@ CSV.foreach(open("https://s3.amazonaws.com/asft/song_release_data.txt"), { :col_
 
     case linetype
     when 0
+      puts "Line count: #{@line_count}"
       @songs = []
       line_info.each do |title|
         new_song = @user.songs.build
