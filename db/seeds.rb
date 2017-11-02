@@ -45,7 +45,8 @@ end
 CSV.foreach(open(song_release_data), { :col_sep => "|", :quote_char => "\x00" }) do |line|
   linetype = @line_count % 5
   @line_count += 1
-  if @line_count > 22000 #103800 #2797220 #2452705 1320910
+  if @line_count > 40000 #22000 103800 #2797220 #2452705 1320910
+    #45213 26762
 #    puts line.inspect
     line_info = line#.chomp.split("|")
 
