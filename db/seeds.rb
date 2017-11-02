@@ -30,9 +30,9 @@ end
 @user2 = User.find_by(username: "RobotOne")
 @user2 ||= User.create(username: "RobotOne", password: "bbbbbbb", email: "fake2@example.com")
 @songs = []
-@failed_songs_file = File.open(Rails.root.join('log', 'failed_songs_file.txt'))
-@failed_tags_file = File.open(Rails.root.join('log', 'failed_tags_file.txt'))
-@failed_taggings_file = File.open(Rails.root.join('log', 'failed_taggings_file.txt'))
+@failed_songs_file = File.open(Rails.root.join('log', 'failed_songs_file.txt'), "w")
+@failed_tags_file = File.open(Rails.root.join('log', 'failed_tags_file.txt'), "w")
+@failed_taggings_file = File.open(Rails.root.join('log', 'failed_taggings_file.txt'), "w")
 
 
 File.open(Rails.root.join('lib', 'seeds', 'song_release_data.txt')).each do |line|
