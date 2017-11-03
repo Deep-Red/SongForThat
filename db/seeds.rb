@@ -45,8 +45,8 @@ end
 CSV.foreach(open(song_release_data), { :col_sep => "|", :quote_char => "\x00" }) do |line|
   linetype = @line_count % 5
   @line_count += 1
-  if @line_count > 135000 #132000 110000 40000 22000 #103800 #2797220 #2452705 1320910
-    #132280 111544 45213 26762
+  if @line_count > 180000 #135000 132000 110000 40000 22000 #103800 #2797220 #2452705 1320910
+    #183391 132280 111544 45213 26762
 #    puts line.inspect
     line_info = line#.chomp.split("|")
 
@@ -83,8 +83,7 @@ CSV.foreach(open(song_release_data), { :col_sep => "|", :quote_char => "\x00" })
       @songs.each do |song|
         song.year = line_info[0][0..3].to_i if line_info && line_info[0] && line_info[0][0..3]
         unless song.save
-          puts "Song #{song} #{song.title} has errors:"
-          puts song.errors.full_messages
+          @failed_songs_file.puts "Song #{song} #{song.title} has errors: #{song.errors.full_messages}"
         end
       end
       puts "Processed release ##{@line_count / 5}" if @line_count % 50 == 0
