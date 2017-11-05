@@ -1,26 +1,25 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-
-
 require 'csv'
 require 'open-uri'
 
-def create_tag(name, user)
+def create_song(title, artist, year)
+  song = Song.find_or_create_by(title: "#{title}", artist: "#{artist}")
+  song.added_by ||= @user
+  song.year ||= year
+  song.save
+  return song
+end
+
+def create_tag(name)
   tag = Tag.find_or_create_by(name: "#{name}")
-  tag.added_by ||= user
+  tag.added_by ||= @user
   tag.save
   return tag
 end
 
-def create_tagging(tag, song, category, user)
+def create_tagging(tag_name, song, category)
+  tag = Tag.find_by(name: "#{tag_name}")
   tagging = Tagging.find_or_create_by(tag: tag, song: song, category: "#{category}")
-  tagging.created_by ||= user
+  tagging.created_by ||= @user
   tagging.save
   return tagging
 end
@@ -41,52 +40,51 @@ if Rails.env.production?
 else
   song_release_data = Rails.root.join('lib', 'seeds', 'song_release_data.txt')
 end
+@start_time = Time.now
 
 CSV.foreach(open(song_release_data), { :col_sep => "|", :quote_char => "\x00" }) do |line|
   linetype = @line_count % 5
   @line_count += 1
-  if @line_count > 190000 #180000 135000 132000 110000 40000 22000 #103800 #2797220 #2452705 1320910
-    #183391 132280 111544 45213 26762
-#    puts line.inspect
-    line_info = line#.chomp.split("|")
+  if @line_count > 0
 
     case linetype
     when 0
-      puts "Line count: #{@line_count}"
-      @songs = []
-      line_info.each do |title|
-        new_song = @user.songs.build
-        new_song.title = title
-        @songs << new_song
-      end
+      @release_titles = []
+      @release_artist = nil
+      @release_styles = []
+      @release_genres = []
+      @release_year = nil
+
+      line.each { |title| @release_titles << title }
+
     when 1
-      @songs.map! do |song|
-        song.artist = line_info.join(", ")
-        song.save unless Song.find_by(title: "#{song.title}", artist: "#{song.artist}")
-        Song.find_by(title: "#{song.title}", artist: "#{song.artist}")
-      end
+      @release_artist = line.join(", ")
+
     when 2
-      line_info.each do |genre|
-        new_tag = create_tag(genre, @user)
-        @songs.each do |song|
-          create_tagging(new_tag, song, "genre", @user)
-        end
-      end
+      line.each { |genre| @release_styles << genre }
+
     when 3
-      line_info.each do |style|
-        new_tag = create_tag(style, @user)
-        @songs.each do |song|
-          create_tagging(new_tag, song, "style", @user)
-        end
-      end
+      line.each { |style| @release_styles << style }
+
     when 4
-      @songs.each do |song|
-        song.year = line_info[0][0..3].to_i if line_info && line_info[0] && line_info[0][0..3]
-        unless song.save
-          @failed_songs_file.puts "Song #{song} #{song.title} has errors: #{song.errors.full_messages}"
-        end
+      @release_year = line[0][0..3].to_i if line && line[0] && line[0][0..3]
+
+      @release_styles.each do |style|
+        create_tag(style)
       end
-      puts "Processed release ##{@line_count / 5}" if @line_count % 50 == 0
+
+      @release_titles.each do |title|
+        new_song = create_song(title, @release_artist, @release_year)
+
+        @release_styles.each do |style|
+          create_tagging(style, new_song, "style")
+        end
+
+      end
+
+      unless Rails.env.production?
+        puts "Processed release ##{@line_count / 5} in #{Time.now - @start_time}" if @line_count % 500 == 0
+      end
     else
       raise "line_count (#{@line_count}) % 5 not in 0..4"
     end
