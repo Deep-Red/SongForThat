@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { Router         } from "@angular/router";
 import { Http           } from "@angular/http";
 import   template         from "./template.html";
+import   * as _           from "lodash";
 
 var SongDetailsComponent = Component({
   selector: "asft-song-details",
@@ -18,6 +19,19 @@ var SongDetailsComponent = Component({
       this.id             = null;
       this.song           = null;
       this.router         = router;
+
+      var that = this;
+
+      this.getTags = _.debounce((term, request) => {
+        request.get(
+          "/tags.json?keywords=" + term
+        ).subscribe(
+          function(response) {
+            that.tags = response.json().tags;
+          }
+        );
+      }, 762, {'leading': true, 'trailing': true});
+
     }
   ],
   viewDetails: function(element) {
@@ -31,16 +45,12 @@ var SongDetailsComponent = Component({
   search: function($event) {
     var self = this;
     self.keywords = $event;
-    if (self.keywords.length < 3) {
+    if (self.keywords.length < 2) {
       return;
     }
-    self.http.get(
-      "/tags.json?keywords=" + self.keywords
-    ).subscribe(
-      function(response) {
-        self.newtags = response.json().tags;
-      }
-    );
+
+    self.getTags(self.keywords, self.http);
+
   },
   addTag: function(tag, song) {
     var self = this;

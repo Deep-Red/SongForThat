@@ -3,6 +3,8 @@ import { Http      } from "@angular/http";
 import { Router    } from "@angular/router";
 import   template    from "./template.html";
 
+import   * as _      from "lodash";
+
 var NewSearchComponent = Component({
 
   selector: "asft-new-search",
@@ -17,7 +19,29 @@ var NewSearchComponent = Component({
       this.http      = http;
       this.keywords  = "";
       this.router = router;
-    }
+      var that = this;
+
+      this.getSongs = _.debounce((term, request) => {
+        request.get(
+          "/songs.json?keywords=" + term
+        ).subscribe(
+          function(response) {
+            that.songs = response.json().songs;
+          }
+        );
+      }, 762, {'leading': true, 'trailing': true});
+
+      this.getTags = _.debounce((term, request) => {
+        request.get(
+          "/tags.json?keywords=" + term
+        ).subscribe(
+          function(response) {
+            that.tags = response.json().tags;
+          }
+        );
+      }, 762, {'leading': true, 'trailing': true});
+
+    },
   ],
   viewDetails: function(element) {
     if (element.name)
@@ -30,23 +54,13 @@ var NewSearchComponent = Component({
   search: function($event) {
     var self = this;
     self.keywords = $event;
-    if (self.keywords.length < 3) {
+    if (self.keywords.length < 2) {
       return;
     }
-    self.http.get(
-      "/songs.json?keywords=" + self.keywords
-    ).subscribe(
-      function(response) {
-        self.songs = response.json().songs;
-      }
-    );
-    self.http.get(
-      "/tags.json?keywords=" + self.keywords
-    ).subscribe(
-      function(response) {
-        self.tags = response.json().tags;
-      }
-    );
+
+    self.getSongs(self.keywords, self.http);
+    self.getTags(self.keywords, self.http);
+
   }
 });
 
