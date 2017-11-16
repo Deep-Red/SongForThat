@@ -21,13 +21,14 @@ var SongDetailsComponent = Component({
       this.router         = router;
 
       var that = this;
+      this.newTags        = [];
 
       this.getTags = _.debounce((term, request) => {
         request.get(
           "/tags.json?keywords=" + term
         ).subscribe(
           function(response) {
-            that.tags = response.json().tags;
+            that.newTags = response.json().tags;
           }
         );
       }, 762, {'leading': true, 'trailing': true});
@@ -52,19 +53,31 @@ var SongDetailsComponent = Component({
     self.getTags(self.keywords, self.http);
 
   },
-  addTag: function(tag, song) {
+  addTag: function(name) {
     var self = this;
-    self.tag = tag.id;
+    self.http.post(
+      "/tags.json?",
+      {tag: {name: name}}
+    ).subscribe(
+      function(response) {
+      self.newTags.unshift(response.json().tag);
+      }
+    );
+  },
+  addTagging: function(tag, song) {
+    var self = this;
+    self.tag = tag;
     self.song = song.id;
     self.category = "content";
     self.http.post(
       "/taggings.json?",
-      {tagging: {tag: self.tag,
+      {tagging: {tag: self.tag.id,
       song: self.song,
       category: self.category}}
     ).subscribe(
       function(response) {
-        self.http.get("/songs/" + song.id + ".json");
+        console.log(self.tag);
+        self.tags.push(self.tag);
       }
     );
   },

@@ -24,8 +24,8 @@
       <input type="text" id="new-tag" name="new-tag"
         placeholder="type here" class="form-control input-lg" bindon-ngModel="keywords"
         on-ngModelChange="search($event)">
-      <span class="input-group-btn">
-        <input type="submit" value="Find" class="btn btn-primary btn-lg" on-click="search($event)">
+      <span class="input-group-btn" *ngIf="keywords">
+        <input type="submit" value="Create Tag" class="btn btn-primary btn-lg" on-click="addTag(keywords)">
       </span>
     </div>
   </form>
@@ -33,9 +33,9 @@
 <section class="tag-song-results">
   <h2 class="h4">Tag Results</h2>
   <ol class="list-group">
-    <li *ngFor="let tag of newtags" class="list-group-item clearfix">
+    <li *ngFor="let tag of newTags" class="list-group-item clearfix">
       <h2> {{ tag.name }} </h2>
-      <input type="submit" value="Add" class="btn btn-primary btn-lg" on-click="addTag(tag, song)">
+      <input type="submit" value="Tag Song" class="btn btn-primary btn-md" on-click="addTagging(tag, song)">
     </li>
   </ol>
 </section>
