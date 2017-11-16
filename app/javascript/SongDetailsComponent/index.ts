@@ -64,20 +64,18 @@ var SongDetailsComponent = Component({
       }
     );
   },
-  addTagging: function(tag, song) {
+  addTagging: function(tag) {
     var self = this;
     self.tag = tag;
-    self.song = song.id;
     self.category = "content";
     self.http.post(
       "/taggings.json?",
       {tagging: {tag: self.tag.id,
-      song: self.song,
+      song: self.song.id,
       category: self.category}}
     ).subscribe(
       function(response) {
-        console.log(self.tag);
-        self.tags.push(self.tag);
+        self.tags.push(response.json().tag);
       }
     );
   },
