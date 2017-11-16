@@ -3,5 +3,5 @@ class Tagging < ApplicationRecord
   belongs_to  :song
   belongs_to  :tag
   has_many    :types, through: :taggings_type
-  has_may     :votes, as: :voteable
+  has_many     :votes, as: :voteable
 end
