@@ -11,3 +11,35 @@
   margin-top: 10px;
   margin-bottom: 30px;
 }
+
+.btn-group p {
+  float: left;
+  background-color: #5BC0DE;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.btn-group p i {
+  cursor: pointer;
+  vertical-align: top;
+  opacity: 0.3;
+  margin-top: 2px;
+  color: #28A745;
+}
+
+.btn-group p :last-child {
+  display: block;
+  padding-bottom: 1px;
+  margin-top: -2px;
+  color: #D9534F;
+}
+
+.btn-group p i:hover {
+  opacity: 0.8;
+}
+
+.btn-group p i:active {
+  opacity: 1;
+}

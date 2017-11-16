@@ -8,7 +8,7 @@ class VotesController < ApplicationController
 
   def downvote
     @voteable = find_voteable
-    @vote = current_user.votes.build
+    @vote = current_user.votes.find_or_create_by(voteable: @voteable)
     @vote.vote = -1
     @vote.save
 end
