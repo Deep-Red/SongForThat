@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170929052657) do
+ActiveRecord::Schema.define(version: 20171116121743) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
+  enable_extension "dblink"
 
   create_table "songs", force: :cascade do |t|
     t.citext "title"
@@ -75,7 +76,19 @@ ActiveRecord::Schema.define(version: 20170929052657) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.integer "vote", limit: 2
+    t.bigint "user_id"
+    t.string "votable_type"
+    t.bigint "votable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
+  end
+
   add_foreign_key "taggings", "songs"
   add_foreign_key "taggings", "tags"
   add_foreign_key "taggings", "users", column: "created_by_id"
+  add_foreign_key "votes", "users"
 end
