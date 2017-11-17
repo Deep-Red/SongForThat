@@ -79,6 +79,50 @@ var SongDetailsComponent = Component({
       }
     );
   },
+  upvote: function(tag) {
+    var self = this;
+    self.tag = tag;
+
+    if (self.upvotedTags.filter(item => item.id !== tag.id).length !== self.upvotedTags.length) {
+      return;
+    }
+
+    self.http.post(
+      "/votes/upvote.json?",
+      { tag_id: self.tag.id,
+        voteable_type: "Tagging",
+        song_id: self.song.id }
+    ).subscribe(
+      function(response) {
+        self.upvotedTags.push(response.json().tag);
+        self.downvotedTags = self.downvotedTags.filter(item => item.id !== response.json().tag.id);
+        self.unvotedTags = self.unvotedTags.filter(item => item.id !== response.json().tag.id);
+      }
+    )
+  },
+  downvote: function(tag) {
+    var self = this;
+    self.tag = tag;
+
+    if (self.downvotedTags.filter(item => item.id !== tag.id).length !== self.downvotedTags.length) {
+      return;
+    }
+
+    self.http.post(
+      "/votes/downvote.json?",
+      {
+        tag_id: self.tag.id,
+        voteable_type: "Tagging",
+        song_id: self.song.id
+      },
+    ).subscribe(
+      function(response) {
+        self.downvotedTags.push(response.json().tag);
+        self.upvotedTags = self.upvotedTags.filter(item => item.id !== response.json().tag.id);
+        self.unvotedTags = self.unvotedTags.filter(item => item.id !== response.json().tag.id);
+      }
+    )
+  },
   ngOnInit: function() {
     var self = this;
     var observableFailed = function(response) {
@@ -87,6 +131,9 @@ var SongDetailsComponent = Component({
     var songGetSuccess = function(response) {
       self.song = response.json().song;
       self.tags = response.json().tags;
+      self.upvotedTags = response.json().upvoted_tags;
+      self.downvotedTags = response.json().downvoted_tags;
+      self.unvotedTags = response.json().unvoted_tags;
     }
     var routeSuccess = function(params) {
       self.http.get(

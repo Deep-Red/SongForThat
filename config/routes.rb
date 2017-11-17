@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   get "taggings/ng",                to: "taggings#ng"
   get "taggings/ng/*angular_route", to: "taggings#ng"
 
-  resources :votes
+  post "votes/upvote",              to: "votes#upvote"
+  post "votes/downvote",            to: "votes#downvote"
+
   resources :songs, only: [ :index, :show ]
   resources :tags, only: [ :index, :show, :new, :create ]
   resources :taggings, only: [ :index, :show, :new, :create ]

@@ -82,12 +82,12 @@ ActiveRecord::Schema.define(version: 20171116131830) do
   create_table "votes", force: :cascade do |t|
     t.integer "vote", limit: 2
     t.bigint "user_id"
-    t.string "votable_type"
-    t.bigint "votable_id"
+    t.string "voteable_type"
+    t.bigint "voteable_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable_type_and_votable_id"
+    t.index ["voteable_type", "voteable_id"], name: "index_votes_on_voteable_type_and_voteable_id"
   end
 
   add_foreign_key "taggings", "songs"

@@ -26,7 +26,11 @@
   vertical-align: top;
   opacity: 0.3;
   margin-top: 2px;
-  color: #28A745;
+  color: #00FF00;
+}
+
+.btn-group p .voted {
+  opacity: 1.0;
 }
 
 .btn-group p :last-child {
@@ -38,8 +42,4 @@
 
 .btn-group p i:hover {
   opacity: 0.8;
-}
-
-.btn-group p i:active {
-  opacity: 1;
 }
