@@ -2,7 +2,7 @@ require 'csv'
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'song-seeds.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-u = User.find_by(username: "RobotZero")
+u = User.find_by(username: "RZ")
 line_count = 0
 failed_taggings_file = File.open(Rails.root.join('log', 'failed_taggings_file.txt'), "w")
 csv.each do |row|

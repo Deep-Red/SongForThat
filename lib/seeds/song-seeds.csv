@@ -2398,6 +2398,8 @@ Murder,The End,The Doors
 Breakup,Goodbye to Romance,Ozzy Osbourne
 Goodbye,Goodbye to Romance,Ozzy Osbourne
 Drugs,Junkie,Ozzy Osbourne
+Heroin,Junkie,Ozzy Osbourne
+Addiction,Junkie,Ozzy Osbourne
 Environmentalism,Dreamer,Ozzy Osbourne
 War,2 Minutes to Midnight,Iron Maiden
 Greed,2 Minutes to Midnight,Iron Maiden
@@ -2461,10 +2463,10 @@ Insomnia,I'm So Tired,The Beatles
 Breakup,Time Is On My Side,Rolling Stones
 Crime,Nobody Move,Eazy-E
 Murder,The Tower,Insane Clown Posse
-Violent,The Tower,Insane Clown Posse
+Violence,The Tower,Insane Clown Posse
 Abuse,White Lights,Blazay Roze
-Violent,White Lights,Blazay Roze
-Violent,Mind of a Lunatic,Geto Boys
+Violence,White Lights,Blazay Roze
+Violence,Mind of a Lunatic,Geto Boys
 Retirement,My Way,Frank Sinatra
 Death,My Way,Frank Sinatra
 Goodbye,My Way,Frank Sinatra
@@ -2481,3 +2483,4 @@ Surrender,Selling Out,Tristania
 Friendship,I'll Be There For You,The Rembrandts
 Patriotic,Rawdogs & Warhogs,Ted Nugent
 Friendship,We're Going To Be Friends,The White Stripes
+Inappropriate Relationship,Don't Stand So Close To Me,The Police

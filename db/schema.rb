@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171117082838) do
+ActiveRecord::Schema.define(version: 20171119053753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 20171117082838) do
     t.bigint "added_by_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "year"
     t.integer "mb_recording"
     t.integer "mb_artist_credit"
     t.integer "mb_work"
@@ -31,14 +30,12 @@ ActiveRecord::Schema.define(version: 20171117082838) do
     t.index ["artist"], name: "index_songs_on_artist"
     t.index ["title", "artist"], name: "index_songs_on_title_and_artist", unique: true
     t.index ["title"], name: "index_songs_on_title"
-    t.index ["year"], name: "index_songs_on_year"
   end
 
   create_table "taggings", force: :cascade do |t|
     t.bigint "song_id"
     t.bigint "tag_id"
     t.bigint "created_by_id"
-    t.decimal "score", default: "0.0"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "category"
