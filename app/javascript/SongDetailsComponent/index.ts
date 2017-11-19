@@ -67,7 +67,7 @@ var SongDetailsComponent = Component({
   addTagging: function(tag) {
     var self = this;
     self.tag = tag;
-    self.category = "content";
+    self.category = "tag";
     self.http.post(
       "/taggings.json?",
       {tagging: {tag: self.tag.id,

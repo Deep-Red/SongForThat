@@ -61,6 +61,7 @@ class TagsController < ApplicationController
   def create
     @tag = Tag.new(tag_params)
     @tag.added_by = User.find(current_user.id)
+    @tag.name.downcase!
     respond_to do |format|
       if @tag.save
         format.html { redirect_to "/", notice: 'Tag was successfully created.' }

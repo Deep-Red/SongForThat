@@ -44,20 +44,26 @@ class SongsController < ApplicationController
     upvoted_tags = []
     downvoted_tags = []
     unvoted_tags = []
-    taggings.each do |tagging|
-      tag = Tag.find(tagging.tag_id)
-      tags << tag
-      vote = Vote.find_by(voteable_type: "Tagging", voteable_id: tagging.id, user_id: current_user.id)
-      if vote && vote.vote > 0
-        votes << vote
-        upvoted_tags << tag
-      elsif vote && vote.vote < 0
-        votes << vote
-        downvoted_tags << tag
-      else
-        unvoted_tags << tag
+
+    unless taggings.empty?
+      taggings.each do |tagging|
+        tag = Tag.find(tagging.tag_id)
+        tags << tag
+        if current_user
+          vote = Vote.find_by(voteable_type: "Tagging", voteable_id: tagging.id, user_id: current_user.id)
+        end
+        if vote && vote.vote > 0
+          votes << vote
+          upvoted_tags << tag
+        elsif vote && vote.vote < 0
+          votes << vote
+          downvoted_tags << tag
+        else
+          unvoted_tags << tag
+        end
       end
     end
+
     respond_to do |format|
       format.html { redirect_to "/"}
       format.json { render json: { song: song, tags: tags, votes: votes,

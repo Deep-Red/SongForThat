@@ -15,7 +15,7 @@ csv.each do |row|
   if a
     unless b
       t = u.tags.build
-      t.name = row['tag']
+      t.name = row['tag'].downcase
       t.save ? b = Tag.find_by(name: row['tag']) : puts("#{t} FAILED: #{t.errors.full_messages}")
     end
 
@@ -28,7 +28,7 @@ csv.each do |row|
     end
 
   else
-    failed_taggings_file.puts("#{row['title']} #{row['artist']} could not be found to tag as #{row['tag']}!")
+    failed_taggings_file.puts("#{row['tag']} | #{row['title']} | #{row['artist']} | Failed")
   end
 
   puts "Processed line ##{line_count}."
