@@ -9,22 +9,25 @@
   <div class="btn-toolbar">
     <div class="btn-group" *ngFor="let tag of upvotedTags">
       <button class="btn btn-info btn-sm">
-        {{ tag.name }}
+        {{ tag.tag.name }}
       </button>
+      <p class="vote-total">{{ tag.score }}</p>
       <p><i class="glyphicon glyphicon-ok voted float-left" on-click="upvote(tag)"></i>
       <i class="glyphicon glyphicon-remove" on-click="downvote(tag)"></i></p>
     </div>
     <div class="btn-group" *ngFor="let tag of downvotedTags">
       <button class="btn btn-info btn-sm">
-        {{ tag.name }}
+        {{ tag.tag.name }}
       </button>
+      <p class="vote-total">{{ tag.score }}</p>
       <p><i class="glyphicon glyphicon-ok float-left" on-click="upvote(tag)"></i>
       <i class="glyphicon glyphicon-remove voted" on-click="downvote(tag)"></i></p>
     </div>
     <div class="btn-group" *ngFor="let tag of unvotedTags">
       <button class="btn btn-info btn-sm">
-        {{tag.name}}
+        {{tag.tag.name}}
       </button>
+      <p class="vote-total">{{ tag.score }}</p>
       <p><i class="glyphicon glyphicon-ok float-left" on-click="upvote(tag)"></i>
       <i class="glyphicon glyphicon-remove" on-click="downvote(tag)"></i></p>
     </div>

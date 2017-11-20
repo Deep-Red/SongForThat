@@ -8,7 +8,7 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to "/"}
-      format.json { render json: { tag: @voteable.tag } }
+      format.json { render json: { tag: {tag: @voteable.tag, score: @voteable.votes.sum(:vote)} } }
     end
   end
 
@@ -20,8 +20,8 @@ class VotesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to "/" }
-      format.json { render json: { tag: @voteable.tag } }
-    end 
+      format.json { render json: { tag: {tag: @voteable.tag, score: @voteable.votes.sum(:vote)} } }
+    end
   end
 
   private

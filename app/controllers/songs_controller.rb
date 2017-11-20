@@ -48,21 +48,25 @@ class SongsController < ApplicationController
     unless taggings.empty?
       taggings.each do |tagging|
         tag = Tag.find(tagging.tag_id)
-        tags << tag
+        tags << { tag: tag, score: tagging.votes.sum(:vote) }
         if current_user
           vote = Vote.find_by(voteable_type: "Tagging", voteable_id: tagging.id, user_id: current_user.id)
         end
         if vote && vote.vote > 0
           votes << vote
-          upvoted_tags << tag
+          upvoted_tags << { tag: tag, score: tagging.votes.sum(:vote) }
         elsif vote && vote.vote < 0
           votes << vote
-          downvoted_tags << tag
+          downvoted_tags << { tag: tag, score: tagging.votes.sum(:vote) }
         else
-          unvoted_tags << tag
+          unvoted_tags << { tag: tag, score: tagging.votes.sum(:vote) }
         end
       end
     end
+
+    upvoted_tags.sort_by!{|k| k["score"]}
+    downvoted_tags.sort_by!{|k| k["score"]}
+    unvoted_tags.sort_by!{|k| k["score"]}
 
     respond_to do |format|
       format.html { redirect_to "/"}
