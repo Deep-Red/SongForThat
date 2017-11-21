@@ -28,6 +28,15 @@
         <%= alert %>
       </aside>
     <% end %>
+
+    <% unless current_user %>
+      <aside class="alert alert-warning">
+        <p>We value your opinion!</p>
+        <p>Please <%= link_to "Register", new_user_registration_path %> and <%= link_to "Log In", new_user_session_path %> to create and vote
+        on tags.</p>
+      </aside>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
