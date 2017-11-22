@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   post "votes/upvote",              to: "votes#upvote"
   post "votes/downvote",            to: "votes#downvote"
 
+  resources :users, only: [ :show ]
+
   resources :songs, only: [ :index, :show ]
   resources :tags, only: [ :index, :show, :new, :create ]
   resources :taggings, only: [ :index, :show, :new, :create ]
