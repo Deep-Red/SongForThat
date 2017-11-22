@@ -28,8 +28,9 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.2'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
-# Use Devise for authentication
+# Use Devise and Omniauth for authentication
 gem 'devise'
+gem 'omniauth-facebook'
 # Use Foreman to run webpack and rails servers simultaneously
 gem 'foreman'
 # Use Redis adapter to run Action Cable in production
@@ -41,6 +42,7 @@ gem 'foreman'
 # gem 'capistrano-rails', group: :development
 
 gem 'angular_rails_csrf'
+gem 'figaro'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
