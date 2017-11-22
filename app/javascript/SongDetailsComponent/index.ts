@@ -75,7 +75,7 @@ var SongDetailsComponent = Component({
       category: self.category}}
     ).subscribe(
       function(response) {
-        self.tags.push(response.json().tag);
+        self.unvotedTags.push(response.json().tag);
       }
     );
   },

@@ -25,7 +25,7 @@ class TaggingsController < ApplicationController
     respond_to do |format|
       if @tagging.save
         format.html { redirect_to "/", notice: "#{@tagging.song.title} successfully tagged as #{@tagging.tag.name}." }
-        format.json { render json: { song: song, tag: tag } }#render "/songs/#{song.id}.json" }
+        format.json { render json: { tag: { tag: tag, score: @tagging.votes.sum(:vote) } } }#render "/songs/#{song.id}.json" }
       else
         format.html { render :new }
         format.json { render json: @tagging.errors, status: :unprocessable_entity }
