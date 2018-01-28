@@ -1,5 +1,5 @@
 import "hello_angular/polyfills";
-import { Component, NgModule               } from "@angular/core";
+import { Component, NgModule, enableProdMode } from "@angular/core";
 import { BrowserModule          } from "@angular/platform-browser";
 import { FormsModule            } from "@angular/forms";
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic";
@@ -44,5 +44,7 @@ var NewAppModule = NgModule({
 .Class({
   constructor: function() {}
 });
+
+enableProdMode();
 
 platformBrowserDynamic().bootstrapModule(NewAppModule);
