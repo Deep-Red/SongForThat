@@ -29,7 +29,7 @@ var NewSearchComponent = Component({
             that.songs = response.json().songs;
           }
         );
-      }, 762, {'leading': true, 'trailing': true});
+      }, 762, {'leading': false, 'trailing': true});
 
       this.getTags = _.debounce((term, request) => {
         request.get(
@@ -39,7 +39,7 @@ var NewSearchComponent = Component({
             that.tags = response.json().tags;
           }
         );
-      }, 762, {'leading': true, 'trailing': true});
+      }, 762, {'leading': false, 'trailing': true});
 
     },
   ],

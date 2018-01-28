@@ -31,7 +31,7 @@ var SongDetailsComponent = Component({
             that.newTags = response.json().tags;
           }
         );
-      }, 762, {'leading': true, 'trailing': true});
+      }, 762, {'leading': false, 'trailing': true});
 
     }
   ],
