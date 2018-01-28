@@ -20,8 +20,9 @@
     <button *ngFor="let tag of tags" class="btn btn-info btn-sm" on-click="viewDetails(tag)"> {{ tag.name }} </button>
   </div>
   <h2 class="h4">Song Results</h2>
+
   <ol class="list-group">
-      <li *ngFor="let song of songs" class="list-group-item clearfix">
+      <li *ngFor="let song of songs | paginate: { itemsPerPage: 10, currentPage: p }" class="list-group-item clearfix">
         <h2> {{ song.title }} </h2>
         <div class="pull-right">
           <button class="btn btn-small btn-primary" on-click="viewDetails(song)">
@@ -31,4 +32,5 @@
         <h3> {{ song.artist }} </h3>
       </li>
   </ol>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </section>
