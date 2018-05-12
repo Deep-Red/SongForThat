@@ -9,7 +9,7 @@
         placeholder="Title, Artist, or Tag" class="form-control input-lg" bindon-ngModel="keywords"
         on-ngModelChange="search($event)">
       <span class="input-group-btn">
-        <input type="submit" value="Find" class="btn btn-primary btn-lg" on-click="search()">
+        <input type="submit" value="Find" class="btn btn-primary btn-lg" on-click="search(keywords)">
       </span>
     </div>
   </form>
