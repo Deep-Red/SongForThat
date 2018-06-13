@@ -13,13 +13,14 @@ class SongsController < ApplicationController
   # GET /songs.json
   def index
     @page = (params[:page] || 0).to_i
+    @sort = (params[:sort] || "title ASC")
     if params[:keywords].present?
       @keywords = params[:keywords]
       song_search_term = SongSearchTerm.new(@keywords)
       @songs = Song.where(
       song_search_term.where_clause,
       song_search_term.where_args).
-      order(song_search_term.order).
+      order(@sort).
       offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
     else
       @songs = []
@@ -29,7 +30,7 @@ class SongsController < ApplicationController
         redirect_to songs_ng_path
       }
       format.json {
-        render json: { songs: @songs }
+        render json: { songs: @songs, page: @page, sort: @sort }
       }
     end
   end

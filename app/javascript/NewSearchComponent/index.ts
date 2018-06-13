@@ -18,15 +18,20 @@ var NewSearchComponent = Component({
       this.tags = null;
       this.http      = http;
       this.keywords  = "";
+      this.options = ["title ASC", "title DESC", "artist ASC", "artist DESC"];
+      this.songOrder = "title ASC";
+      this.page = 0;
       this.router = router;
       var that = this;
 
-      this.getSongs = _.debounce((term, request) => {
+      this.getSongs = _.debounce((term, sort, request) => {
         request.get(
-          "/songs.json?keywords=" + term
+          "/songs.json?keywords=" + term + "&sort=" + sort
         ).subscribe(
           function(response) {
             that.songs = response.json().songs;
+            that.page = response.json().page;
+            that.songOrder = response.json().sort;
           }
         );
       }, 762, {'leading': false, 'trailing': true});
@@ -58,9 +63,15 @@ var NewSearchComponent = Component({
       return;
     }
 
-    self.getSongs(self.keywords, self.http);
+    self.getSongs(self.keywords, self.songOrder, self.http);
     self.getTags(self.keywords, self.http);
 
+  },
+  sort: function($event) {
+    var self = this;
+    self.songOrder = $event;
+
+    self.getSongs(self.keywords, self.songOrder, self.http);
   }
 });
 

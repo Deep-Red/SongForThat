@@ -15,8 +15,6 @@ class SongSearchTerm
 
     @where_clause << " OR #{case_insensitive_search(:artist)}"
     @where_args[:artist] = starts_with(search_term)
-
-#    @order = "title ASC"
   end
 
   def starts_with(search_term)
