@@ -10,12 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121211724) do
+ActiveRecord::Schema.define(version: 20180614062942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
   enable_extension "dblink"
+  enable_extension "pg_trgm"
+  enable_extension "btree_gist"
 
   create_table "songs", force: :cascade do |t|
     t.citext "title"
@@ -28,7 +30,7 @@ ActiveRecord::Schema.define(version: 20171121211724) do
     t.integer "mb_work"
     t.index ["added_by_id"], name: "index_songs_on_added_by_id"
     t.index ["artist"], name: "index_songs_on_artist"
-    t.index ["title", "artist"], name: "index_songs_on_title_and_artist", unique: true
+    t.index ["title", "artist"], name: "index_songs_on_title_and_artist", using: :gist
     t.index ["title"], name: "index_songs_on_title"
   end
 

@@ -18,19 +18,15 @@ class SongsController < ApplicationController
       @keywords = params[:keywords]
       song_search_term = SongSearchTerm.new(@keywords)
       @songs = Song.where(
-      song_search_term.where_clause,
-      song_search_term.where_args).
+      "similarity(title, ?) > 0.7 OR similarity(artist, ?) > 0.7", @keywords, @keywords).
       order(@sort).
       offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
-      count = Song.where(
-      song_search_term.where_clause,
-      song_search_term.where_args).
-      count
+      count = Song.where("similarity(title, ?) > 0.7 OR similarity(artist, ?) > 0.7", @keywords, @keywords).limit(150).count
     else
       @songs = []
       count = 0
     end
-    @pages = count / PAGE_SIZE
+    @pages = count < 149 ? count / PAGE_SIZE : "15+"
 
 
     respond_to do |format|
