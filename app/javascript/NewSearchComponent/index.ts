@@ -19,6 +19,7 @@ var NewSearchComponent = Component({
       this.http      = http;
       this.keywords  = "";
       this.options = ["title ASC", "title DESC", "artist ASC", "artist DESC"];
+      this.option = "title ASC";
       this.songOrder = "title ASC";
       this.page = 0;
       this.router = router;
