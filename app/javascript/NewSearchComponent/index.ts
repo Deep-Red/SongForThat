@@ -26,9 +26,9 @@ var NewSearchComponent = Component({
       this.router = router;
       var that = this;
 
-      this.getSongs = _.debounce((term, sort, page, request) => {
+      this.getSongs = _.debounce((term, sort, page, pages, request) => {
         request.get(
-          "/songs.json?keywords=" + term + "&sort=" + sort + "&page=" + page
+          "/songs.json?keywords=" + term + "&sort=" + sort + "&page=" + page + "&pages=" + pages
         ).subscribe(
           function(response) {
             that.songs = response.json().songs;
@@ -37,7 +37,7 @@ var NewSearchComponent = Component({
             that.page = response.json().page;
           }
         );
-      }, 762, {'leading': false, 'trailing': true});
+      }, 600, {'leading': false, 'trailing': true});
 
       this.getTags = _.debounce((term, request) => {
         request.get(
@@ -67,7 +67,7 @@ var NewSearchComponent = Component({
       return;
     }
 
-    self.getSongs(self.keywords, self.songOrder, self.page, self.http);
+    self.getSongs(self.keywords, self.songOrder, self.page, self.pages, self.http);
     self.getTags(self.keywords, self.http);
 
   },
@@ -76,7 +76,7 @@ var NewSearchComponent = Component({
     self.page = 0;
     self.songOrder = $event;
 
-    self.getSongs(self.keywords, self.songOrder, self.page, self.http);
+    self.getSongs(self.keywords, self.songOrder, self.page, self.pages, self.http);
   },
   turnPage: function(diff) {
     var self = this;
@@ -84,7 +84,7 @@ var NewSearchComponent = Component({
     console.log("Turning page.");
     console.log(diff);
 
-    self.getSongs(self.keywords, self.songOrder, self.page, self.http);
+    self.getSongs(self.keywords, self.songOrder, self.page, self.pages, self.http);
   }
 });
 

@@ -14,20 +14,26 @@ class SongsController < ApplicationController
   def index
     @page = (params[:page] || 0).to_i
     @sort = (params[:sort] || "title ASC")
+    @pages = params[:pages].to_i
+
     if params[:keywords].present?
       @keywords = params[:keywords]
       song_search_term = SongSearchTerm.new(@keywords)
       @songs = Song.where(
-      "similarity(title, ?) > 0.7 OR similarity(artist, ?) > 0.7", @keywords, @keywords).
+      "similarity(title, ?) > 0.6 OR similarity(artist, ?) > 0.6", @keywords, @keywords).
       order(@sort).
       offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
-      count = Song.where("similarity(title, ?) > 0.7 OR similarity(artist, ?) > 0.7", @keywords, @keywords).limit(150).count
+      count = Song.where("similarity(title, ?) > 0.6 OR similarity(artist, ?) > 0.6", @keywords, @keywords).limit(150).count if @pages == 0
     else
       @songs = []
       count = 0
     end
-    @pages = count < 149 ? count / PAGE_SIZE : "15+"
 
+    if @pages == 0
+      @pages = (count < 149 ? count / PAGE_SIZE : "15+")
+    elsif @pages >= 15
+      @pages = "15+"
+    end
 
     respond_to do |format|
       format.html {
