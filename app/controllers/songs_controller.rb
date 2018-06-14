@@ -22,15 +22,23 @@ class SongsController < ApplicationController
       song_search_term.where_args).
       order(@sort).
       offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
+      count = Song.where(
+      song_search_term.where_clause,
+      song_search_term.where_args).
+      count
     else
       @songs = []
+      count = 0
     end
+    @pages = count / PAGE_SIZE
+
+
     respond_to do |format|
       format.html {
         redirect_to songs_ng_path
       }
       format.json {
-        render json: { songs: @songs, page: @page, sort: @sort }
+        render json: { songs: @songs, page: @page, sort: @sort, pages: @pages }
       }
     end
   end
