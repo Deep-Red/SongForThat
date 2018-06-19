@@ -24,7 +24,7 @@
     <select class="form-control" bindon-ngModel="option" on-ngModelChange="sort($event)">
       <option class="sort" *ngFor="let option of options" [value]="option">{{option}}</option>
     </select>
-    <label>Page {{ page + 1 }} of {{ pages }}</label>
+    <label>Page {{ page + 1 }}</label>
       <button class="btn btn-info form-control" name="back" on-click="turnPage(- 1)">Previous Page</button>
       <button class="btn btn-info form-control" name="next" on-click="turnPage(+ 1)">Next Page</button>
   </div>

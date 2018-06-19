@@ -23,7 +23,8 @@ class SongsController < ApplicationController
       "similarity(title, ?) > 0.6 OR similarity(artist, ?) > 0.6", @keywords, @keywords).
       order(@sort).
       offset(PAGE_SIZE * @page).limit(PAGE_SIZE)
-      count = Song.where("similarity(title, ?) > 0.6 OR similarity(artist, ?) > 0.6", @keywords, @keywords).limit(150).count if @pages == 0
+      # count of pages is disabled until I can find a way to optimize it.
+      count = 0 #Song.where("similarity(title, ?) > 0.6 OR similarity(artist, ?) > 0.6", @keywords, @keywords).limit(150).count if @pages == 0
     else
       @songs = []
       count = 0
